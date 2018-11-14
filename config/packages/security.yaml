@@ -1,7 +1,15 @@
 security:
+    encoders:
+        App\Entity\User:
+            algorithm: bcrypt
+
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
-        in_memory: { memory: ~ }
+        # used to reload user from session & other features (e.g. switch_user)
+        app_user_provider:
+            entity:
+                class: App\Entity\User
+                property: email
     firewalls:
         login:
             pattern:  ^/api/login
@@ -11,7 +19,7 @@ security:
                 check_path:               /api/login_check
                 success_handler:          lexik_jwt_authentication.handler.authentication_success
                 failure_handler:          lexik_jwt_authentication.handler.authentication_failure
-
+                require_previous_session: false
         api:
             pattern:   ^/api
             stateless: true

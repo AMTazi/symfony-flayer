@@ -16,4 +16,7 @@ return [
     Symfony\Bundle\DebugBundle\DebugBundle::class => ['dev' => true, 'test' => true],
     JMS\SerializerBundle\JMSSerializerBundle::class => ['all' => true],
     FOS\RestBundle\FOSRestBundle::class => ['all' => true],
+    Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle::class => ['all' => true],
+    Nelmio\Alice\Bridge\Symfony\NelmioAliceBundle::class => ['dev' => true, 'test' => true],
+    Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle::class => ['all' => true],
 ];

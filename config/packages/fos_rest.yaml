@@ -5,11 +5,16 @@ fos_rest:
 #    routing_loader: true
     view:
         view_response_listener:  true
-#    exception:
+    exception:
+        exception_controller: 'fos_rest.exception.controller:showAction'
 #        codes:
 #            App\Exception\MyException: 403
 #        messages:
 #            App\Exception\MyException: Forbidden area.
+    body_converter:
+        enabled: true
+        validate: true
+        validation_errors_argument:  violations
     format_listener:
         rules:
             - { path: ^/api, prefer_extension: true, fallback_format: json, priorities: [ json, html ] }

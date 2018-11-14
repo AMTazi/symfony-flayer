@@ -33,50 +33,131 @@
     <schema id="27" parent="1" name="udev"/>
     <schema id="28" parent="1" name="waypoints"/>
     <schema id="29" parent="1" name="wilayas"/>
-    <table id="30" parent="2" name="migration_versions"/>
-    <table id="31" parent="2" name="user"/>
-    <column id="32" parent="30" name="version">
-      <Position>1</Position>
-      <DataType>varchar(255)|0</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <key id="33" parent="30" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
-      <ColNames>version</ColNames>
-      <Primary>1</Primary>
-    </key>
-    <column id="34" parent="31" name="id">
+    <table id="30" parent="2" name="flayer"/>
+    <table id="31" parent="2" name="migration_versions"/>
+    <table id="32" parent="2" name="user"/>
+    <column id="33" parent="30" name="id">
       <Position>1</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
     </column>
-    <column id="35" parent="31" name="email">
+    <column id="34" parent="30" name="user_id">
+      <Position>2</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="35" parent="30" name="street">
+      <Position>3</Position>
+      <DataType>varchar(255)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="36" parent="30" name="city">
+      <Position>4</Position>
+      <DataType>varchar(255)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="37" parent="30" name="zip">
+      <Position>5</Position>
+      <DataType>varchar(10)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="38" parent="30" name="country">
+      <Position>6</Position>
+      <DataType>varchar(255)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="39" parent="30" name="state">
+      <Position>7</Position>
+      <DataType>varchar(255)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="40" parent="30" name="price">
+      <Position>8</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="41" parent="30" name="description">
+      <Position>9</Position>
+      <DataType>longtext|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="42" parent="30" name="slug">
+      <Position>10</Position>
+      <DataType>varchar(255)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="43" parent="30" name="created_at">
+      <Position>11</Position>
+      <DataType>datetime|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="44" parent="30" name="updated_at">
+      <Position>12</Position>
+      <DataType>datetime|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="45" parent="30" name="title">
+      <Position>13</Position>
+      <DataType>varchar(255)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="46" parent="30" name="IDX_4D969BE3A76ED395">
+      <ColNames>user_id</ColNames>
+    </index>
+    <key id="47" parent="30" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="48" parent="30" name="FK_4D969BE3A76ED395">
+      <ColNames>user_id</ColNames>
+      <RefSchemaName>jwt_db</RefSchemaName>
+      <RefTableName>user</RefTableName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <column id="49" parent="31" name="version">
+      <Position>1</Position>
+      <DataType>varchar(255)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <key id="50" parent="31" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>version</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="51" parent="32" name="id">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="52" parent="32" name="email">
       <Position>2</Position>
       <DataType>varchar(180)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="36" parent="31" name="roles">
+    <column id="53" parent="32" name="roles">
       <Position>3</Position>
       <Comment>(DC2Type:array)</Comment>
       <DataType>longtext|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="37" parent="31" name="password">
+    <column id="54" parent="32" name="password">
       <Position>4</Position>
       <DataType>varchar(255)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="38" parent="31" name="UNIQ_8D93D649E7927C74">
+    <index id="55" parent="32" name="UNIQ_8D93D649E7927C74">
       <ColNames>email</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="39" parent="31" name="PRIMARY">
+    <key id="56" parent="32" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="40" parent="31" name="UNIQ_8D93D649E7927C74">
+    <key id="57" parent="32" name="UNIQ_8D93D649E7927C74">
       <ColNames>email</ColNames>
       <UnderlyingIndexName>UNIQ_8D93D649E7927C74</UnderlyingIndexName>
     </key>

@@ -2,7 +2,10 @@
 
 namespace App\Entity;
 
+use Cocur\Slugify\Slugify;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\FlayerRepository")
@@ -17,36 +20,43 @@ class Flayer
     private $id;
 
     /**
+     * @Assert\NotBlank()
      * @ORM\Column(type="string", length=255)
      */
     private $street;
 
     /**
+     * @Assert\NotBlank()
      * @ORM\Column(type="string", length=255)
      */
     private $city;
 
     /**
+     * @Assert\NotBlank()
      * @ORM\Column(type="string", length=10)
      */
     private $zip;
 
     /**
+     * @Assert\NotBlank()
      * @ORM\Column(type="string", length=255)
      */
     private $country;
 
     /**
+     * @Assert\NotBlank()
      * @ORM\Column(type="string", length=255)
      */
     private $state;
 
     /**
+     * @Assert\NotBlank()
      * @ORM\Column(type="integer")
      */
     private $price;
 
     /**
+     * @Assert\NotBlank()
      * @ORM\Column(type="text")
      */
     private $description;
@@ -57,22 +67,36 @@ class Flayer
     private $slug;
 
     /**
+     *
+     * @Gedmo\Timestampable(on="update")
      * @ORM\Column(type="datetime")
      */
     private $created_at;
 
     /**
+     * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime")
      */
     private $updated_at;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="flayers")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="flayers",fetch="EAGER")
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
 
-    public function getId(): ?int
+    /**
+     * @Assert\NotBlank()
+     * @ORM\Column(type="string", length=255)
+     */
+    private $title;
+
+	public static function makeSlug( string $string ): string
+	{
+		return (new Slugify())->slugify($string );
+	}
+
+	public function getId(): ?int
     {
         return $this->id;
     }
@@ -178,24 +202,24 @@ class Flayer
         return $this->created_at;
     }
 
-    public function setCreatedAt(\DateTimeInterface $created_at): self
+    /*public function setCreatedAt(\DateTimeInterface $created_at): self
     {
         $this->created_at = $created_at;
 
         return $this;
-    }
+    }*/
 
     public function getUpdatedAt(): ?\DateTimeInterface
     {
         return $this->updated_at;
     }
 
-    public function setUpdatedAt(\DateTimeInterface $updated_at): self
+    /*public function setUpdatedAt(\DateTimeInterface $updated_at): self
     {
         $this->updated_at = $updated_at;
 
         return $this;
-    }
+    }*/
 
     public function getUser(): ?User
     {
@@ -205,6 +229,18 @@ class Flayer
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getTitle(): ?string
+    {
+        return $this->title;
+    }
+
+    public function setTitle(string $title): self
+    {
+        $this->title = $title;
 
         return $this;
     }

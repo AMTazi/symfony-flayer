@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -30,13 +31,14 @@ class User implements UserInterface, \Serializable
     private $roles = [];
 
     /**
+     * @Serializer\Exclude()
      * @var string The hashed password
      * @ORM\Column(type="string")
      */
     private $password;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Flayer", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="App\Entity\Flayer", mappedBy="user",fetch="EAGER")
      */
     private $flayers;
 

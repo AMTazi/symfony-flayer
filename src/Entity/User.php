@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -32,6 +34,16 @@ class User implements UserInterface, \Serializable
      * @ORM\Column(type="string")
      */
     private $password;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Flayer", mappedBy="user")
+     */
+    private $flayers;
+
+    public function __construct()
+    {
+        $this->flayers = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -117,15 +129,16 @@ class User implements UserInterface, \Serializable
 	 * @return string the string representation of the object or null
 	 * @since 5.1.0
 	 */
-	public function serialize() {
-		return serialize(array(
-			$this->id,
-			$this->email,
-			$this->password,
-			// see section on salt below
-			// $this->salt,
-		));
-	}
+	public function serialize()
+	{
+        return serialize(array(
+            $this->id,
+            $this->email,
+            $this->password,
+            // see section on salt below
+            // $this->salt,
+        ));
+    }
 
 	/**
 	 * Constructs the object
@@ -138,12 +151,44 @@ class User implements UserInterface, \Serializable
 	 * @return void
 	 * @since 5.1.0
 	 */
-	public function unserialize( $serialized ) {
-		list (
-			$this->id,
-			$this->email,
-			$this->password,
-			// see section on salt below
-			// $this->salt
-			) = unserialize($serialized);
-}}
+	public function unserialize( $serialized )
+	{
+	    list (
+	        $this->id,
+	        $this->email,
+	        $this->password,
+	        // see section on salt below
+	        // $this->salt
+	        ) = unserialize($serialized);
+    }
+
+    /**
+     * @return Collection|Flayer[]
+     */
+    public function getFlayers(): Collection
+    {
+        return $this->flayers;
+    }
+
+    public function addFlayer(Flayer $flayer): self
+    {
+        if (!$this->flayers->contains($flayer)) {
+            $this->flayers[] = $flayer;
+            $flayer->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFlayer(Flayer $flayer): self
+    {
+        if ($this->flayers->contains($flayer)) {
+            $this->flayers->removeElement($flayer);
+            // set the owning side to null (unless already changed)
+            if ($flayer->getUser() === $this) {
+                $flayer->setUser(null);
+            }
+        }
+
+        return $this;
+    }}

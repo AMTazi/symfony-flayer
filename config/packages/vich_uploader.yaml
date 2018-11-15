@@ -1,0 +1,8 @@
+vich_uploader:
+    db_driver: orm
+
+    mappings:
+        flayers:
+            uri_prefix: /images/flayers
+            upload_destination: '%kernel.project_dir%/public/images/flayers'
+            namer: Vich\UploaderBundle\Naming\UniqidNamer
